@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/commons-lang3-3.8.1-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/mina-core-2.0.13-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/mina-core-2.0.13.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/mina-integration-beans-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/slf4j-api-1.7.25-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/lushengyang/Desktop/LSY/jar包/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
