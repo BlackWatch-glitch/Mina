@@ -10,6 +10,9 @@ import org.apache.mina.filter.codec.textline.LineDelimiter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
+/*
+ * mina服务端
+ */
 public class MinaServer {
 	
 	static int PORT=7080;	//端口
