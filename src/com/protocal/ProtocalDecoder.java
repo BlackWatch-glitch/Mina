@@ -14,16 +14,16 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
  */
 public class ProtocalDecoder implements ProtocolDecoder{
 	
-	private final AttributeKey CONTEXT = new AttributeKey(this.getClass(), "context");	//CONTEXT在session中保存我们的上下文
+	private final AttributeKey CONTEXT = new AttributeKey(this.getClass(), "context");	//CONTEXT在session中保存我们的上下文，传入当前的对象this.getClass()
 	private final Charset charset;
-	private int maxPackLength = 100;
+	private int maxPackLength = 100;	//包的最大长度
 	
 	public int getMaxPackLength() {
 		return maxPackLength;
 	}
 
 	public void setMaxPackLength(int maxPackLength) {
-		if(maxPackLength<0) {
+		if(maxPackLength < 0) {
 			throw new IllegalArgumentException("maxPackLength参数：" + maxPackLength);
 		}
 		this.maxPackLength = maxPackLength;
@@ -34,7 +34,7 @@ public class ProtocalDecoder implements ProtocolDecoder{
 	}
 	
 	public ProtocalDecoder() {
-		this(Charset.defaultCharset());
+		this(Charset.defaultCharset());	//传入charset
 	}
 	
 	
@@ -47,27 +47,28 @@ public class ProtocalDecoder implements ProtocolDecoder{
 		return ctx;
 	}
 	
+	//解码
 	@Override
 	public void decode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
-		final int packHeadlength = 5;
-		Context ctx = this.getContext(session);
-		ctx.append(in);
-		IoBuffer buf = ctx.getBuf();
-		buf.flip();
-		while(buf.remaining() >= packHeadlength) {
-			buf.mark();
-			int length = buf.getInt();
-			byte flag = buf.get();
-			if(length < 0 || length > maxPackLength) {
-				buf.reset();
+		final int packHeadlength = 5;		//包头的长度
+		Context ctx = this.getContext(session);	//获得session的上下文
+		ctx.append(in);	//加入到上下文中
+		IoBuffer buf = ctx.getBuf();	
+		buf.flip();	//准备开始读取数据
+		while(buf.remaining() >= packHeadlength) {	//查看是否有数据  buf.remaining缓冲区数据
+			buf.mark();		//标记
+			int length = buf.getInt(); //获得length
+			byte flag = buf.get();	
+			if(length < 0 || length > maxPackLength) { //length超出或许小于则是无效的
+				buf.reset();	//重置
 				break;
 			}else if(length >= packHeadlength && length - packHeadlength <= buf.remaining()) {
-				int oldLimit = buf.limit();
-				buf.limit(buf.position() + length - packHeadlength);
-				String content = buf.getString(ctx.getDecoder());
-				buf.limit(oldLimit);
+				int oldLimit = buf.limit();	
+				buf.limit(buf.position() + length - packHeadlength);	//content
+				String content = buf.getString(ctx.getDecoder());	//取出content
+				buf.limit(oldLimit);	
 				ProtocalPack pakeage = new ProtocalPack(flag,content);
-				out.write(pakeage);
+				out.write(pakeage);//写入
 			}else {	//半包
 				buf.clear();
 				break;
@@ -85,7 +86,7 @@ public class ProtocalDecoder implements ProtocolDecoder{
 	}
 
 	@Override
-	public void dispose(IoSession session) throws Exception {
+	public void dispose(IoSession session) throws Exception {//移除
 		Context ctx = (Context)session.getAttribute(CONTEXT);
 		if(ctx!=null) {
 			session.removeAttribute(CONTEXT);
@@ -108,10 +109,12 @@ public class ProtocalDecoder implements ProtocolDecoder{
 			buf = IoBuffer.allocate(80).setAutoExpand(true);
 		}
 		
+		//追加缓存区数据
 		public void append(IoBuffer in) {
 			this.getBuf().put(in);
 		}
 		
+		//重置
 		public void rest() {
 			decoder.reset();
 		}
