@@ -39,6 +39,7 @@ public class MinaServer {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 }
