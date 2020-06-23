@@ -11,7 +11,7 @@ import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 /*
- * mina服务端 
+ * mina服务端     
  */
 public class MinaServer {
 	
