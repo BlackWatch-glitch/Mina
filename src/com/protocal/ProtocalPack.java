@@ -10,7 +10,7 @@ public class ProtocalPack {
 	
 	public ProtocalPack(byte flag, String contetn) {
 		this.flag = flag;
-		this.content = content;
+		this.content = content;	//主体
 		int len1 = content == null ? 0 : content.getBytes().length;
 		this.length = 5 + len1;		//5=4+1,int4个字节，byte1哥字节
 	}
